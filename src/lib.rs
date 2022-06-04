@@ -18,17 +18,15 @@ macro_rules! def_big_array {
                         arr[i] = <$T>::deserialize(buf)?;
                     }
                 }
-                Ok($name::Arr(arr))
+                Ok($name { arr })
             }
         }
 
         impl BorshSerialize for $name {
             #[inline]
             fn serialize<W: Write>(&self, writer: &mut W) -> io::Result<()> {
-                if let $name::Arr(arr) = self {
-                    for el in arr.iter() {
-                        el.serialize(writer)?;
-                    }
+                for el in self.arr.iter() {
+                    el.serialize(writer)?;
                 }
                 Ok(())
             }
