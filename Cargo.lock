@@ -17,8 +17,13 @@ dependencies = [
 name = "big_array"
 version = "0.1.0"
 dependencies = [
+ "big_array_derive",
  "borsh",
 ]
+
+[[package]]
+name = "big_array_derive"
+version = "0.1.0"
 
 [[package]]
 name = "borsh"
