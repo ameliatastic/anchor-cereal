@@ -32,7 +32,7 @@ pub fn initialize(
 
    my_account.data = data;
 
-   // BigData gets implementations for Index and IndexMut, so you don't have to
+   // BigData gets implementations for Deref and DerefMut, so you don't have to
    // reference the inner `value` in order to use the array.
    let first = my_account.data[0];
    my_account.data[1] = 2;
