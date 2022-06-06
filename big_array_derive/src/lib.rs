@@ -51,17 +51,17 @@ pub fn abaadas_derive(input: TokenStream) -> TokenStream {
             }
         }
 
-        impl Index<usize> for #name {
-            type Output = #ty;
+        impl Deref for #name {
+            type Target = [#ty; #len];
 
-            fn index(&self, idx: usize) -> &Self::Output {
-                &self.value[idx]
+            fn deref(&self) -> &Self::Target {
+                &self.value
             }
         }
 
-        impl IndexMut<usize> for #name {
-            fn index_mut(&mut self, idx: usize) -> &mut Self::Output {
-                &mut self.value[idx]
+        impl DerefMut for #name {
+            fn deref_mut(&mut self) -> &mut Self::Target {
+                &mut self.value
             }
         }
     };
