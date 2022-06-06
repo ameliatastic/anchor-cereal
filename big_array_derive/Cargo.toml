@@ -1,10 +1,13 @@
 [package]
-name = "big_array"
+name = "big_array_derive"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-borsh = "*"
-big_array_derive = { path = "big_array_derive" }
+quote = "1.0.18"
+syn = { version = "1.0.96", features = ["derive"] }
+
+[lib]
+proc-macro = true
