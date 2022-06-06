@@ -2,8 +2,8 @@ use proc_macro::TokenStream;
 use quote::quote;
 use syn;
 
-#[proc_macro_derive(AbaAnchorDeserializeAnchorSerialize)]
-pub fn abaadas_derive(input: TokenStream) -> TokenStream {
+#[proc_macro_derive(AnchorDeserializeArray)]
+pub fn anchor_deserialize_array_derive(input: TokenStream) -> TokenStream {
     let ast: syn::DeriveInput = syn::parse(input).unwrap();
 
     let name = ast.ident;
@@ -21,11 +21,12 @@ pub fn abaadas_derive(input: TokenStream) -> TokenStream {
                 }) => {
                     (elem.clone(), len.clone())
                 }
-                _ => panic!("Cannot derive")
+                _ => panic!("Cannot derive: expected struct with a single field `value: [T; N]`")
             }
         },
-        _ => panic!("Cannot derive")
+        _ => panic!("Cannot derive: expected struct with named fields")
     };
+
 
     let gen = quote! {
         impl BorshDeserialize for #name {
@@ -38,16 +39,6 @@ pub fn abaadas_derive(input: TokenStream) -> TokenStream {
                     }
                 }
                 Ok(#name { value })
-            }
-        }
-
-        impl BorshSerialize for #name {
-            #[inline]
-            fn serialize<W: Write>(&self, writer: &mut W) -> io::Result<()> {
-                for el in self.value.iter() {
-                    el.serialize(writer)?;
-                }
-                Ok(())
             }
         }
 
@@ -67,4 +58,25 @@ pub fn abaadas_derive(input: TokenStream) -> TokenStream {
     };
 
     gen.into()
+}
+
+#[proc_macro_derive(AnchorSerializeArray)]
+pub fn anchor_serialize_array_derive(input: TokenStream) -> TokenStream {
+    let ast: syn::DeriveInput = syn::parse(input).unwrap();
+    let name = ast.ident;
+
+    let gen = quote! {
+        impl BorshSerialize for #name {
+            #[inline]
+            fn serialize<W: Write>(&self, writer: &mut W) -> io::Result<()> {
+                for el in self.value.iter() {
+                    el.serialize(writer)?;
+                }
+                Ok(())
+            }
+        }
+    };
+
+    gen.into()
+
 }

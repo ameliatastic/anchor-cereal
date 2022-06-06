@@ -5,12 +5,16 @@ For some reason, Anchor doesn't let you create weird-sized arrays in #[account]-
 ## Usage
 
 ```rs
+use big_array::*;
+
+...
+
 // Define a struct to wrap your array - it must:
-//   - derive Clone and AbaAnchorDeserializeAnchorSerialize
+//   - derive Clone, AnchorSerializeArray, and AnchorDeserializeArray
 //   - contain a single field `value`, which is an array.
 // The "Aba..." trait implements everything you need to use this struct as an
 // array in Anchor.
-#[derive(Clone, AbaAnchorDeserializeAnchorSerialize)]
+#[derive(Clone, AnchorSerializeArray, AnchorDeserializeArray)]
 pub struct BigData {
     value: [u8; 50]
 }
