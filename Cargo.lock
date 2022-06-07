@@ -14,16 +14,20 @@ dependencies = [
 ]
 
 [[package]]
-name = "big_array"
+name = "anchor-cereal"
 version = "0.1.0"
 dependencies = [
- "big_array_derive",
+ "anchor-cereal-derive",
  "borsh",
 ]
 
 [[package]]
-name = "big_array_derive"
+name = "anchor-cereal-derive"
 version = "0.1.0"
+dependencies = [
+ "quote",
+ "syn",
+]
 
 [[package]]
 name = "borsh"

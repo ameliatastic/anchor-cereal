@@ -1,5 +1,5 @@
 [package]
-name = "big_array"
+name = "anchor-cereal"
 version = "0.1.0"
 edition = "2021"
 
@@ -7,4 +7,4 @@ edition = "2021"
 
 [dependencies]
 borsh = "*"
-big_array_derive = { path = "big_array_derive" }
+anchor-cereal-derive = { path = "anchor-cereal-derive" }
