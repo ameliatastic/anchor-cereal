@@ -1,6 +1,6 @@
 # anchor-cereal
 
-For some reason, Anchor doesn't let you create weird-sized arrays in #[account]-derived structs. This crate fixes that by providing a macro that generates a serializable struct with an array of any size, _that actually shows up in your IDL._
+A quality of life package for Anchor made to support the Solana ecosystem. Currently, it allows you to serialize a struct containing an array of any size, while still showing up in your IDL. More features coming soon!! :)
 
 ## Usage
 
