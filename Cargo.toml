@@ -3,7 +3,7 @@ name = "anchor-cereal"
 version = "0.1.1"
 edition = "2021"
 license = "MIT"
-description = "A quality of life package for Anchor made to support the Solana ecosystem. Currently, it allows you to serialize a struct containing an array of any size, while still showing up in your IDL. More features coming soon!! :)"
+description = "A quality of life package for Anchor."
 repository = "https://github.com/ameliatastic/anchor-cereal"
 readme = "README.md"
 
