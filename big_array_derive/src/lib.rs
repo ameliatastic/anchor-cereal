@@ -2,6 +2,27 @@ use proc_macro::TokenStream;
 use quote::quote;
 use syn;
 
+#[proc_macro_derive(AnchorSerializeArray)]
+pub fn anchor_serialize_array_derive(input: TokenStream) -> TokenStream {
+    let ast: syn::DeriveInput = syn::parse(input).unwrap();
+    let name = ast.ident;
+
+    let gen = quote! {
+        impl BorshSerialize for #name {
+            #[inline]
+            fn serialize<W: Write>(&self, writer: &mut W) -> io::Result<()> {
+                for el in self.value.iter() {
+                    el.serialize(writer)?;
+                }
+                Ok(())
+            }
+        }
+    };
+
+    gen.into()
+
+}
+
 #[proc_macro_derive(AnchorDeserializeArray)]
 pub fn anchor_deserialize_array_derive(input: TokenStream) -> TokenStream {
     let ast: syn::DeriveInput = syn::parse(input).unwrap();
@@ -60,23 +81,12 @@ pub fn anchor_deserialize_array_derive(input: TokenStream) -> TokenStream {
     gen.into()
 }
 
-#[proc_macro_derive(AnchorSerializeArray)]
-pub fn anchor_serialize_array_derive(input: TokenStream) -> TokenStream {
-    let ast: syn::DeriveInput = syn::parse(input).unwrap();
-    let name = ast.ident;
+#[proc_macro_derive(AnchorSerializeSkip)]
+pub fn anchor_serialize_skip_derive(_input: TokenStream) -> TokenStream {
+    TokenStream::new()
+}
 
-    let gen = quote! {
-        impl BorshSerialize for #name {
-            #[inline]
-            fn serialize<W: Write>(&self, writer: &mut W) -> io::Result<()> {
-                for el in self.value.iter() {
-                    el.serialize(writer)?;
-                }
-                Ok(())
-            }
-        }
-    };
-
-    gen.into()
-
+#[proc_macro_derive(AnchorDeserializeSkip)]
+pub fn anchor_deserialize_skip_derive(_input: TokenStream) -> TokenStream {
+    TokenStream::new()
 }
