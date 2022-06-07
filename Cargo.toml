@@ -1,10 +1,14 @@
 [package]
 name = "anchor-cereal"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
+license = "MIT"
+description = "A quality of life package for Anchor made to support the Solana ecosystem. Currently, it allows you to serialize a struct containing an array of any size, while still showing up in your IDL. More features coming soon!! :)"
+repository = "https://github.com/ameliatastic/anchor-cereal"
+readme = "README.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-borsh = "*"
-anchor-cereal-derive = { path = "anchor-cereal-derive" }
+borsh = "^0.9"
+anchor-cereal-derive = { version = "0.1.0", path = "anchor-cereal-derive" }
