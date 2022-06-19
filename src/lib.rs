@@ -1,23 +1,19 @@
 pub mod array {
-   pub use anchor_cereal_derive::*;
-   pub use std::{
-      io::{self, Write},
-      ops::{Deref, DerefMut}
-   };
-   pub use borsh::{BorshDeserialize, BorshSerialize};
+  pub use anchor_cereal_derive::{
+    AnchorDefaultArray, AnchorDeserializeArray, AnchorSerializeArray,
+  };
 
-   pub trait AnchorSerializeArray: BorshSerialize {}
-   pub trait AnchorDeserializeArray: BorshDeserialize + Deref + DerefMut {}
+  pub trait AnchorDefaultArray: Default {}
+  pub trait AnchorSerializeArray: borsh::BorshSerialize {}
+  pub trait AnchorDeserializeArray:
+    borsh::BorshDeserialize + std::ops::Deref + std::ops::DerefMut
+  {
+  }
 }
 
 pub mod skip {
-   pub use anchor_cereal_derive::*;
-   pub use std::{
-      io::{self, Write},
-      ops::{Deref, DerefMut}
-   };
-   pub use borsh::{BorshDeserialize, BorshSerialize};
+  pub use anchor_cereal_derive::{AnchorDeserializeSkip, AnchorSerializeSkip};
 
-   pub trait AnchorSerializeSkip {}
-   pub trait AnchorDeserializeSkip {}
+  pub trait AnchorSerializeSkip {}
+  pub trait AnchorDeserializeSkip {}
 }

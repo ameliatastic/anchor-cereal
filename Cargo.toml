@@ -1,6 +1,6 @@
 [package]
 name = "anchor-cereal"
-version = "0.1.2"
+version = "0.2.0"
 edition = "2021"
 license = "MIT"
 description = "A quality of life package for Anchor."
@@ -11,4 +11,4 @@ readme = "README.md"
 
 [dependencies]
 borsh = "^0.9"
-anchor-cereal-derive = { version = "0.1.0", path = "anchor-cereal-derive" }
+anchor-cereal-derive = { version = "0.2.0", path = "anchor-cereal-derive" }
