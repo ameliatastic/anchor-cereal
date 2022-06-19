@@ -31,12 +31,12 @@ pub fn anchor_default_array_derive(input: TokenStream) -> TokenStream {
   let (_, len) = parse_array_ast(ast.data);
 
   let gen = quote! {
-      impl Default for #name {
-          #[inline]
-          fn default() -> Self {
-            Self { value: [Default::default(); #len] }
-          }
+    impl Default for #name {
+      #[inline]
+      fn default() -> Self {
+        Self { value: [Default::default(); #len] }
       }
+    }
   };
 
   gen.into()
@@ -48,15 +48,15 @@ pub fn anchor_serialize_array_derive(input: TokenStream) -> TokenStream {
   let name = ast.ident;
 
   let gen = quote! {
-      impl borsh::BorshSerialize for #name {
-          #[inline]
-          fn serialize<W: std::io::Write>(&self, writer: &mut W) -> std::io::Result<()> {
-              for el in self.value.iter() {
-                  el.serialize(writer)?;
-              }
-              Ok(())
-          }
+    impl borsh::BorshSerialize for #name {
+      #[inline]
+      fn serialize<W: std::io::Write>(&self, writer: &mut W) -> std::io::Result<()> {
+        for el in self.value.iter() {
+          el.serialize(writer)?;
+        }
+        Ok(())
       }
+    }
   };
 
   gen.into()
@@ -69,32 +69,38 @@ pub fn anchor_deserialize_array_derive(input: TokenStream) -> TokenStream {
   let (ty, len) = parse_array_ast(ast.data);
 
   let gen = quote! {
-      impl borsh::BorshDeserialize for #name {
-          #[inline]
-          fn deserialize(buf: &mut &[u8]) -> std::io::Result<Self> {
-            let items = Vec::with_capacity(#len);
+    impl borsh::BorshDeserialize for #name {
+      #[inline]
+      fn deserialize(buf: &mut &[u8]) -> std::io::Result<Self> {
+        let items = Vec::with_capacity(#len);
 
-            for i in 0..#len {
-              items.push(#ty::deserialize(buf)?);
-            }
+        for i in 0..#len {
+          items.push(#ty::deserialize(buf)?);
+        }
 
-            return Ok(Self { value: items.try_into().unwrap() });
-          }
+        return Ok(Self { value: items.try_into().unwrap() });
       }
+    }
 
-      impl std::ops::Deref for #name {
-          type Target = [#ty; #len];
+    impl std::ops::Deref for #name {
+      type Target = [#ty; #len];
 
-          fn deref(&self) -> &Self::Target {
-              &self.value
-          }
+      fn deref(&self) -> &Self::Target {
+        &self.value
       }
+    }
 
-      impl std::ops::DerefMut for #name {
-          fn deref_mut(&mut self) -> &mut Self::Target {
-              &mut self.value
-          }
+    impl std::ops::DerefMut for #name {
+      fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.value
       }
+    }
+
+    impl From<[#ty; #len]> for #name {
+      fn from(value: [#ty; #len]) -> Self {
+        Self { value }
+      }
+    }
   };
 
   gen.into()

@@ -15,7 +15,7 @@ dependencies = [
 
 [[package]]
 name = "anchor-cereal"
-version = "0.2.0"
+version = "0.2.4"
 dependencies = [
  "anchor-cereal-derive",
  "borsh",
@@ -23,7 +23,7 @@ dependencies = [
 
 [[package]]
 name = "anchor-cereal-derive"
-version = "0.2.0"
+version = "0.2.4"
 dependencies = [
  "quote",
  "syn",
